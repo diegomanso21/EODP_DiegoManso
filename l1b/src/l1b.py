@@ -36,7 +36,7 @@ class l1b(initL1b):
                 eq_add = readFactor(os.path.join(self.auxdir,self.l1bConfig.eq_add+band+NC_EXT),EQ_ADD)
 
                 # Do the equalization and save to file
-                toa = self.equalization(toa, eq_add, eq_mult)
+                toa = self.equalization(toa, eq_add, eq_mult) #formula TOA real apuntes
                 writeToa(self.outdir, self.globalConfig.l1b_toa_eq + band, toa)
 
             # Restitution (absolute radiometric gain)
