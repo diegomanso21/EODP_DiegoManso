@@ -91,7 +91,24 @@ class mtf:
         :return fnAct: 1D normalised frequencies 2D ACT (f/(1/w))
         :return fnAlt: 1D normalised frequencies 2D ALT (f/(1/w))
         """
-        #TODO
+        # TODO
+        fstepAlt = 1/nlines/w
+        fstepAct = 1/ncolumns/w
+
+        eps = 1e-6
+        fAlt = np.arange(-1 / (2 * w), 1 / (2 * w) - eps, fstepAlt)
+        fAct = np.arange(-1 / (2 * w), 1 / (2 * w) - eps, fstepAct)
+
+        fnAlt = fAlt/(1/w)
+        fnAct = fAct / (1/w)
+
+        [fnAltxx, fnActxx] = np.meshgrid(fnAlt, fnAct, indexing='ij')  # Please use ‘ij’ indexing or
+        fn2D = np.sqrt(fnAltxx * fnAltxx + fnActxx * fnActxx)
+
+        f_co = D/lambd/focal
+        fr2D = fn2D * (1 /w) / f_co
+
+
         return fn2D, fr2D, fnAct, fnAlt
 
     def mtfDiffract(self,fr2D):
@@ -101,6 +118,16 @@ class mtf:
         :return: diffraction MTF
         """
         #TODO
+
+        Hdiff = np.zeros((fr2D.shape[0], fr2D.shape[1]))
+        for i in range(fr2D.shape[0]):
+            for j in range(fr2D.shape[1]):
+                if fr2D[i, j] < 1:
+                    Hdiff[i, j] = 2 / np.pi * (
+                                np.arccos(fr2D[i, j]) - fr2D[i, j] * np.sqrt((1 - (fr2D[i, j]) * fr2D[i, j])))
+                else:
+                    Hdiff[i, j] = 0.
+
         return Hdiff
 
 
@@ -114,6 +141,9 @@ class mtf:
         :return: Defocus MTF
         """
         #TODO
+
+
+
         return Hdefoc
 
     def mtfWfeAberrations(self, fr2D, lambd, kLF, wLF, kHF, wHF):
@@ -127,6 +157,8 @@ class mtf:
         :param wHF: RMS of high-frequency wavefront errors [m]
         :return: WFE Aberrations MTF
         """
+
+
         #TODO
         return Hwfe
 
@@ -137,6 +169,7 @@ class mtf:
         :return: detector MTF
         """
         #TODO
+        Hdet = np.abs(np.sin(np.pi * fn2D) / (np.pi * fn2D))
         return Hdet
 
     def mtfSmearing(self, fnAlt, ncolumns, ksmear):

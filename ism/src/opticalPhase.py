@@ -92,6 +92,9 @@ class opticalPhase(initIsm):
         :param Tr: Optical transmittance [-]
         :return: TOA image in irradiances [mW/m2]
         """
+
+        toa = Tr*toa*(np.pi/4)*(D/f)**2
+
         # TODO
         return toa
 
@@ -114,6 +117,23 @@ class opticalPhase(initIsm):
         :param band: band
         :return: TOA image 2D in radiances [mW/m2]
         """
+
+        isrf, isrf_wv = readIsrf(self.auxdir + self.ismConfig.isrffile, band)
+
+        isrf_n = isrf / np.sum(isrf)
+
+        #Interpolation
+        #double loop
+
+        toa = np.zeros((sgm_toa.shape[0], sgm_toa.shape[1])) # we inizialize with a tuple aka double parenthesis
+
+        for row in range(sgm_toa.shape[0]):
+            for columns in range(sgm_toa.shape[1]):
+                # Interpolation
+                cs = interp1d(sgm_wv, sgm_toa[row, columns, :], fill_value=(0, 0), bounds_error=False)
+                toa_1d = cs(isrf_wv*1000)
+                # Multiplication
+                toa[row, columns] = np.sum(toa_1d * isrf_n)
         # TODO
         return toa
 
