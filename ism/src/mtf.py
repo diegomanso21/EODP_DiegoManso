@@ -228,4 +228,4 @@ class mtf:
         #TODO
 
 
-
+# mtf at 0.5 at Along Track and Across track (Nyquist)
