@@ -69,7 +69,7 @@ class mtf:
 
         # Calculate the System MTF
         self.logger.debug("Calculation of the Sysmtem MTF by multiplying the different contributors")
-        Hsys = 1 # dummy
+        Hsys = Hdiff*Hdefoc*Hwfe*Hdet*Hsmear*Hmotion
 
         # Plot cuts ACT/ALT of the MTF
         self.plotMtf(Hdiff, Hdefoc, Hwfe, Hdet, Hsmear, Hmotion, Hsys, nlines, ncolumns, fnAct, fnAlt, directory, band)
@@ -108,6 +108,7 @@ class mtf:
         f_co = D/lambd/focal
         fr2D = fn2D * (1 /w) / f_co
 
+        writeMat(self.outdir, "fn2D", fn2D)
 
         return fn2D, fr2D, fnAct, fnAlt
 
@@ -141,8 +142,9 @@ class mtf:
         :return: Defocus MTF
         """
         #TODO
-
-
+        x = np.pi*defocus*fr2D*(1-fr2D)
+        J1 = x/2 - x**3/16 + x**5/384 - x**7/18432
+        Hdefoc = 2*J1/x
 
         return Hdefoc
 
@@ -158,6 +160,8 @@ class mtf:
         :return: WFE Aberrations MTF
         """
 
+        a = kLF*(wLF*wLF/lambd/lambd)+kHF*(wHF*wHF/lambd/lambd)
+        Hwfe = np.exp(-fr2D*(1-fr2D)*(a))
 
         #TODO
         return Hwfe
@@ -181,6 +185,12 @@ class mtf:
         :return: Smearing MTF
         """
         #TODO
+
+        Hsmear = np.zeros((fnAlt.shape[0],ncolumns))
+        mtf_smear = np.sin(fnAlt*ksmear*np.pi)/(fnAlt*ksmear*np.pi)
+        for i in range (ncolumns):
+            Hsmear[:,i] =mtf_smear
+
         return Hsmear
 
     def mtfMotion(self, fn2D, kmotion):
@@ -190,7 +200,11 @@ class mtf:
         :param kmotion: Amplitude of high-frequency component for the motion smear MTF in ALT and ACT
         :return: detector MTF
         """
+        # Porque algunos son matrices y otros no?
         #TODO
+
+        Hmotion = np.sin(fn2D * kmotion * np.pi) / (fn2D * kmotion * np.pi)
+
         return Hmotion
 
     def plotMtf(self,Hdiff, Hdefoc, Hwfe, Hdet, Hsmear, Hmotion, Hsys, nlines, ncolumns, fnAct, fnAlt, directory, band):
@@ -212,5 +226,6 @@ class mtf:
         :return: N/A
         """
         #TODO
+
 
 

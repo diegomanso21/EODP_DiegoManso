@@ -63,7 +63,13 @@ class l1b(initL1b):
         :return: TOA in DN, equalized
         """
         #TODO
-        return toa
+        toa_eq = np.zeros(toa.shape)
+        for ialt in range(toa.shape[0]):
+            toa_eq[ialt,:]=(toa[ialt,:] - eq_add)/eq_mult
+
+        #toa_end = (toa - eq_add)/eq_mult
+        # Porque si en vez de toa_eq uso toa falla?
+        return toa_eq
 
     def restoration(self,toa,gain):
         """
@@ -74,9 +80,20 @@ class l1b(initL1b):
         """
         #TODO
         self.logger.debug('Sanity check. TOA in radiances after gain application ' + str(toa[1,-1]) + ' [mW/m2/sr]')
-
-        return toa
+        toa_res = toa * gain
+        return toa_res
 
     def plotL1bToa(self, toa_l1b, outputdir, band):
         #TODO
-        a=1 # dummy
+
+        center_value = int(toa_l1b.shape[0]/2)
+        #fig,ax = plt.subplots()
+        #ax.plot(toa_l1b[center_value,:],'k')
+        fig = plt.figure()
+        plt.plot(toa_l1b[center_value,:],'b')
+        plt.title('TOA_l1b')
+        plt.xlabel('Across Track [-]')
+        plt.ylabel('Radiances [mW/m2/sr]')
+        plt.show()
+        fig.savefig(outputdir+'/l1b_toa_plot_'+band+'.png')
+
