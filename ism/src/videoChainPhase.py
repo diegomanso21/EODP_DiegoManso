@@ -72,7 +72,9 @@ class videoChainPhase(initIsm):
         #TODO
         toa_dn = np.round(toa/(max_voltage-min_voltage)*(2**(bit_depth)-1))
 
-        #truncated
-        
+        toa_dn = np.where(toa_dn >(2**bit_depth) - 1, (2**bit_depth)-1, toa_dn)
+
+        #truncation
+
         return toa_dn
 
