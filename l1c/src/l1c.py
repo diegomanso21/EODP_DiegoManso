@@ -79,7 +79,15 @@ class l1c(initL1c):
                 mgrs_tiles.add(mg_mgrs)
         mgrs_tiles = list(mgrs_tiles)
 
+        lat_l1c = np.zeros(len(mgrs_tiles))
+        lon_l1c = np.zeros(len(mgrs_tiles))
+        toa_l1c = np.zeros(len(mgrs_tiles))
+        for i in range(len(mgrs_tiles)):
 
+            lat_l1c[i],lon_l1c[i] = m.toLatLon(mgrs_tiles[i],True)
+            toa_l1c[i] = bisplev(lat_l1c[i],lon_l1c[i],tck)
+        toa_2 = np.sort(toa_l1c)
+        ## sort both toa(radiances) and compare ours and lucias ones. Print it latitude and longitude
 
         return lat_l1c, lon_l1c, toa_l1c
 
@@ -92,4 +100,6 @@ class l1c(initL1c):
         :return: NA
         '''
         #TODO
+        if lat.shape[0] != toa.shape[0] or lat.shape[1] != toa.shape[1]:
 
+            print(' Sizes of input radiances and geodetic coordinates are NOT EQUAL')
