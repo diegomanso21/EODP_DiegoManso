@@ -10,11 +10,11 @@ class ismConfig:
         #--------------------------------------------------------------------------------
         # CCD
         self.pix_size = 42e-6                    # [m] Pixel size in microns for the MS channels
-        self.t_int = 0.0428                    # [s] Integration time
+        self.t_int = 0.0428                     # [s] Integration time
 
         # Optical system
-        self.D = 0.07565                         # [m] Telescope pupil diameter
-        self.f = 0.2345                         # [m] Focal length
+        self.D = 0.07565                          # [m] Telescope pupil diameter
+        self.f = 0.2345                          # [m] Focal length
         self.Tr = 0.99                           # [-] Optical transmittance
         self.wLF = 100e-9                        # [m] RMS of low-frequency wavefront errors
         self.wHF = 100e-9                        # [m] RMS of high-frequency wavefront errors
@@ -73,7 +73,7 @@ class ismConfig:
         # Flags to enable or disable the application of noises and effects
         #--------------------------------------------------------------------------------
         # Optical stage. Use the PSF convolution. If False, will use the MTF
-        self.do_psf_conv = False
+        self.do_psf_conv = True
         # Detection stage errors and effects
         self.apply_prnu = False
         self.apply_dark_signal = False

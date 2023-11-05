@@ -73,7 +73,7 @@ class detectionPhase(initIsm):
                                self.ismConfig.bad_pix,
                                self.ismConfig.dead_pix,
                                self.ismConfig.bad_pix_red,
-                               self.ismConfig.dead_pix_red)
+                               self.ismConfig.dead_pix_red,band)
 
 
         # Write output TOA
@@ -127,7 +127,7 @@ class detectionPhase(initIsm):
 
         return toae
 
-    def badDeadPixels(self, toa,bad_pix,dead_pix,bad_pix_red,dead_pix_red):
+    def badDeadPixels(self, toa,bad_pix,dead_pix,bad_pix_red,dead_pix_red,band):
         """
         Bad and dead pixels simulation
         :param toa: input toa in [e-]
@@ -139,9 +139,61 @@ class detectionPhase(initIsm):
         """
         #TODO
        # bad_pix = 0.1
-        toa[:,5] = toa[:,5] * (1-bad_pix_red)
+        #toa[:,5] = toa[:,5] * (1-bad_pix_red)
         #idx_bad = range(5, toa_act, step_bad)  # Distribute evenly in the CCD
         #idx_dead = range(0, toa_act, step_dead)
+
+        if band == 'VNIR-0':
+            b = open(self.outdir + 'bad_pix.txt','w+')
+            b.truncate(0)
+            b.close()
+
+            d = open(self.outdir + 'dead_pix.txt','w+')
+            d.truncate(0)
+            d.close()
+
+
+
+
+        with open(self.outdir + 'dead_pix.txt', 'a') as d:
+            d.write('Band' + band)
+            d.write('\n')
+
+            num_pixels_act = toa.shape[1]
+            tot_bad_pixels = int(bad_pix/100*num_pixels_act)
+            tot_dead_pixels = int(dead_pix/100*num_pixels_act)
+            if (tot_dead_pixels == 0 ):
+                d.write('No dead pixels index \n')
+
+            else:
+
+                step_ded = int(num_pixels_act/tot_dead_pixels)
+                idx_ded = np.arange(0, num_pixels_act, step_ded) # Distribute evenly in the CCD
+                d.write('\n Index of bad pixels of \n')
+                for ind in range(idx_ded.shape[0]):
+                    toa[:,idx_ded[ind]]=toa[:,idx_ded[ind]]*(1-dead_pix_red)
+                    d.write('\n index '+str(ind) + ' = ' + str(idx_ded[ind]) + '\n')
+                    d.write('\n')
+
+        with open(self.outdir + 'bad_pix.txt', 'a') as b:
+
+
+            b.write('Band ' + band)
+            b.write('\n')
+
+            if tot_bad_pixels == 0:
+
+                b.write('\n No bad pixels index \n')
+                b.write('\n')
+
+
+            else:
+                step_bad = int(num_pixels_act/tot_bad_pixels)
+                idx_bad = np.arange(5, num_pixels_act, step_bad) # Distribute evenly in the CCD
+                for ind in range(idx_bad.shape[0]):
+                    toa[:,idx_bad[ind]]=toa[:,idx_bad[ind]]*(1-bad_pix_red)
+                    b.write('\n index '+str(ind) + ' = ' + str(idx_bad[ind]) )
+                    b.write('\n')
         return toa
 
     def prnu(self, toa, kprnu):

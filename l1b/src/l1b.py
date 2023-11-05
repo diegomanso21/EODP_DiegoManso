@@ -82,7 +82,7 @@ class l1b(initL1b):
         toa = toa * gain
         return toa
 
-    def plotL1bToa(self, toa_l1b, outputdir, band):
+    def plotL1bToa(self, toa_l1b, outdir, band):
         #TODO
 
         center_value = int(toa_l1b.shape[0]/2)
@@ -92,7 +92,6 @@ class l1b(initL1b):
         plt.xlabel('Across Track [-]')
         plt.ylabel('Radiances [mW/m2/sr]')
         plt.grid(True)
-        plt.show()
-        #fig.savefig(outputdir+'/l1b_toa_plot_'+band+'.png')
-        fig.savefig(r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/Figuras/'+ 'l1b_toa_plot_'+band+'.png')
+       # plt.show()
+        fig.savefig(r'outdir'+ 'l1b_toa_plot_'+band+'.png')
 

@@ -227,5 +227,59 @@ class mtf:
         """
         #TODO
 
+        middle_Act = int(np.floor(fnAct.shape[0]/2))
+        middle_Alt = int(np.floor(fnAlt.shape[0]/2))
 
+        fig, ax = plt.subplots()
+        plt.suptitle('Alt = '+str(middle_Alt) + ' for ' +band)
+        fnAct_1 = fnAct[middle_Act:]
+        Hdiff_1 = Hdiff[middle_Alt,middle_Act:]
+        Hdefoc_2 = Hdefoc[middle_Alt,middle_Act:]
+        Hwfe_3 = Hwfe[middle_Alt,middle_Act:]
+        Hdet_4 = Hdet[middle_Alt,middle_Act:]
+        Hsmear_5 = Hsmear[middle_Alt,middle_Act:]
+        Hmotion_6 = Hmotion[middle_Alt,middle_Act:]
+        Hsys_7 = Hsys[middle_Alt,middle_Act:]
+        ax.plot(fnAct_1, Hdiff_1, 'r', label='Hdiff')
+        ax.plot(fnAct_1, Hdefoc_2, 'g', label='Hdefoc')
+        ax.plot(fnAct_1, Hwfe_3, 'b', label='Hwfe')
+        ax.plot(fnAct_1, Hdet_4, 'k', label='Hdet')
+        ax.plot(fnAct_1, Hsmear_5, 'y', label='Hsmear')
+        ax.plot(fnAct_1, Hmotion_6, 'r', label='Hmotion')
+        ax.plot(fnAct_1, Hsys_7, 'g', label='Hsys')
+        plt.xlabel('Spatial Frequencies [-]')
+        plt.ylabel('MTF')
+        plt.legend(loc='lower left')
+        plt.grid(True)
+
+        fig.savefig(self.outdir+'/graph_mtf_alt_'+band+'_graph.png')
+
+        fig2, ax2 = plt.subplots()
+        fnAlt_1 = fnAlt[middle_Alt:]
+        Hdiff_1 = Hdiff[middle_Alt:,middle_Act]
+        Hdefoc_2 = Hdefoc[middle_Alt:,middle_Act]
+        Hwfe_3 = Hwfe[middle_Alt:,middle_Act]
+        Hdet_4 = Hdet[middle_Alt:,middle_Act]
+        Hsmear_5 = Hsmear[middle_Alt:,middle_Act]
+        Hmotion_6 = Hmotion[middle_Alt:,middle_Act]
+        Hsys_7 = Hsys[middle_Alt:,middle_Act]
+
+
+        plt.suptitle('Act = '+str(middle_Act) +' for '+band)
+        ax2.plot(fnAlt_1, Hdiff_1, 'r', label='Hdiff')
+        ax2.plot(fnAlt_1, Hdefoc_2, 'g', label='Hdefoc')
+        ax2.plot(fnAlt_1, Hwfe_3, 'b', label='Hwfe')
+        ax2.plot(fnAlt_1, Hdet_4, 'k', label='Hdet')
+        ax2.plot(fnAlt_1, Hsmear_5, 'y', label='Hsmear')
+        ax2.plot(fnAlt_1, Hmotion_6, 'r', label='Hmotion')
+        ax2.plot(fnAlt_1, Hsys_7, 'g', label='Hsys')
+        plt.grid(True)
+        plt.xlabel('Spatial Frequencies [-]')
+        plt.ylabel('MTF')
+        plt.legend(loc='lower left')
+
+        fig2.savefig(self.outdir+'/graph_mtf_act_'+band+'_graph.png')
 # mtf at 0.5 at Along Track and Across track (Nyquist)
+
+
+
