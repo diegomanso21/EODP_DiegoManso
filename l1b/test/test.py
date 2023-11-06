@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 from config.globalConfig import globalConfig
 
 #Read your outputs
-reference = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/output' #LucSotoResults
-outdir = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/myoutputs' #My results
-outdir_noeq = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/myoutputs_noeq' #MY results no_eq
-outdir_ism = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/input' #MyISMesults
+reference = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/output' #LucSotoResults
+outdir = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/myoutputs' #My results
+outdir_noeq = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/myoutputs_noeq' #MY results no_eq
+outdir_ism = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/input' #MyISMesults
 
 #Compare outputs
 tolerance = 0.01e-2
@@ -93,7 +93,7 @@ for j in range(len(t_eq)):
     plt.ylabel('Radiances [mW/m2/sr]')
     plt.grid(True)
     ax1.legend(['Equalized TOA L1b', 'No Equalized TOA L1b', 'ISRF TOA'])
-    fig1.savefig(r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/Figuras/ComparisonTOA_VNIR'+str(j)+'_graph.png')
+    fig1.savefig(r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/Figuras/ComparisonTOA_VNIR'+str(j)+'_graph.png')
     #plt.show()
 
     fig2 = plt.figure()
@@ -108,7 +108,7 @@ for j in range(len(t_eq)):
     plt.ylabel('Radiances [mW/m2/sr]')
     plt.grid(True)
     ax2.legend(['Reference TOA', 'TOA Test L1b Output'])
-    fig2.savefig(r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/Figuras/Sigma3_VNIR'+str(j)+'_graph.png')
+    fig2.savefig(r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/Figuras/Sigma3_VNIR'+str(j)+'_graph.png')
 
 
 ###############

@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 from config.globalConfig import globalConfig
 
 #Read your outputs
-reference = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/output' #LucSotoResults
-outdir = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/myoutputs' #My results
-outdir_noeq = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/myoutputs_noeq' #MY results no_eq
-outdir_ism = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Data/EODP-TS-L1B/input' #MyISMesults
+reference = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/output' #LucSotoResults
+outdir = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/myoutputs' #My results
+outdir_noeq = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/myoutputs_noeq' #MY results no_eq
+outdir_ism = r'/Users/diegomanso/Desktop/UC3M/2ºMiSE/EOP/Material/EODP_TER_2021/EODP_TER_2021/EODP-TS-L1B/input' #MyISMesults
 
 #Compare outputs
 sigma3 = 1-0.997
